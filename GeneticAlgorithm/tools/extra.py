@@ -55,5 +55,3 @@ def map_to_interval(t, old_range, new_range):
     :return: Float
     """
     return new_range[0] + (new_range[1] - new_range[0]) / (old_range[1] - old_range[0]) * (t - old_range[0])
-
-# ---------------------------------------------------------------------------------------------------------------------

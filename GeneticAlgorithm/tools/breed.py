@@ -51,7 +51,6 @@ def breed_uniform_one_point(individuals, parents, n_children):
     :param individuals: List of floats
     :param parents: List of integers (index of individuals to mate)
     :param n_children: Integer
-    :param co_prob: Float
     :return: Tuple of lists
     """
     children = ()
@@ -92,6 +91,3 @@ def breed_copy(individuals, parents):
     for parent in parents:
         children += (list(individuals[parent]),)
     return children
-
-
-

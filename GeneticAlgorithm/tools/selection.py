@@ -116,5 +116,3 @@ def sel_tournament(fitness, tournaments=1, tour_size=2, replace=False):
             del tmp_index[tmp_fitness.index(best_ind)]
             del tmp_fitness[tmp_fitness.index(best_ind)]
     return sel_individuals
-
-# ---------------------------------------------------------------------------------------------------------------------

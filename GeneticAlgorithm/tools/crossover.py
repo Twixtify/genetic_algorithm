@@ -29,7 +29,7 @@ def co_uniform(ind1, ind2, co_prob=0.5, modify_in_place=False):
         ind1[:size] = co_ind1
         ind2[:size] = co_ind2
         return ind1, ind2
-    # Return new individuals
+
     return co_ind1, co_ind2
 
 
@@ -47,8 +47,6 @@ def co_one_point(ind1, ind2):
     Since numpy arrays are fixed in size we have to convert them to lists first.
     This is necessary since individuals 1 and 2 might be of different lengths.
     """
-    # print(co_point)
-    # print("Input:", ind1, ind2)
     if is_numpy(ind1) and is_numpy(ind2):
         ind1, ind2 = ind1.tolist(), ind2.tolist()
         co_ind1, co_ind2 = ind1[:co_point] + ind2[co_point:], ind2[:co_point] + ind1[co_point:]
@@ -56,8 +54,5 @@ def co_one_point(ind1, ind2):
     else:
         co_ind1, co_ind2 = ind1[:co_point] + ind2[co_point:], ind2[:co_point] + ind1[co_point:]
         ind1, ind2 = co_ind1, co_ind2
-    # print("Output:", ind1, ind2)
-    # print("Lengths: Input (%i, %i) Output: (%i, %i)" % (len(ind1), len(ind2), len(co_ind1), len(co_ind2)))
-    return ind1, ind2
 
-# ---------------------------------------------------------------------------------------------------------------------
+    return ind1, ind2

@@ -48,7 +48,7 @@ def sel_random(individuals, size, replacement=False):
             return random.sample(individuals, k=size)
 
 
-def sel_roulette(fitness, tournaments=2, replace=False):
+def sel_roulette(fitness, tournaments, replace=False):
     """
     Fitness proportionate selection or roulette wheel selection.
     Note that all fitness values should be positive
@@ -84,7 +84,47 @@ def sel_roulette(fitness, tournaments=2, replace=False):
     return sel_individuals
 
 
-def sel_tournament(fitness, tournaments=1, tour_size=2, replace=False):
+def sel_sus(fitness, size):
+    """
+    Perform Stochastic Universal Sampling (SUS), this method has no bias and minimal spread.
+    The idea is to map evenly spaced points to fitness values which have been sorted in descending order.
+    The number of points is equal to the number of individuals to be selected.
+    The larger fitness values will have more pointers inside them. As a consequence, individuals with higher fitness
+    will be selected more frequently.
+
+    "https://en.wikipedia.org/wiki/Stochastic_universal_sampling"
+
+    :param fitness: List of fitness values for the population
+    :param size: Integer
+    :return: List of indexes of 'fitness'
+    """
+    # Sort fitness in descending order
+    sorted_fitness, sorted_index = sort_lists(fitness, list(range(len(fitness))), descending=True)
+    # Total fitness
+    total_fitness = sum(sorted_fitness)
+    # Normalize fitness (i.e map fitness values to the interval [0, 1])
+    sorted_fitness[:] /= total_fitness
+    # Distance between the pointers to create
+    distance = 1 / size
+    # Initial pointer start
+    start = random.uniform(0, distance)
+    # Pointers
+    pointers = [start + i * distance for i in range(size)]
+
+    # Perform selection
+    sel_individuals = []
+    for pointer in pointers:
+        i = 0
+        tmp_sum = sorted_fitness[i]
+        while tmp_sum < pointer:
+            i += 1
+            tmp_sum += sorted_fitness[i]
+        sel_individuals.append(sorted_index[i])
+
+    return sel_individuals
+
+
+def sel_tournament(fitness, tournaments, tour_size, replace=False):
     """
     Tournament selection.
     :param fitness: List of fitness

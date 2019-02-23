@@ -122,3 +122,31 @@ def evolve_breed_roulette(individuals, fitness, tournaments):
         new_individuals[i] = list(individuals[best])
 
     return new_individuals
+
+
+def evolve_sus(individuals, fitness, n_parents):
+    """
+    Breed a new population using Stochastic Universal Sampling
+    :param individuals: List of floats
+    :param fitness: List of floats
+    :param n_parents: Integer
+    :return: List
+    """
+    # -- Select parents --
+    parents = sel_sus(fitness, n_parents)
+
+    # -- Perform crossover --
+    children = breed_uniform(individuals, parents, n_children=len(individuals), co_prob=0.5)
+
+    # ------- Mutate children -------
+    for child in children:
+        mut_gauss(child, 0.01)
+
+    new_individuals = list(children)
+
+    # -- Elitism --
+    best_id = sel_best(fitness, round(0.05 * len(fitness)))
+    for i, best in enumerate(best_id):
+        new_individuals[i] = list(individuals[best])
+
+    return new_individuals

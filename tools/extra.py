@@ -13,7 +13,7 @@ def is_numpy(ind):
         return False
 
 
-def sort_lists(list1, list2, descending=True):
+def sort_lists(list1, list2, descending):
     """
     If descending = True:
         Sort list1 in descending order (largest-to-smallest value)

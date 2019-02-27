@@ -1,6 +1,6 @@
-from GeneticAlgorithm.tools.selection import *
-from GeneticAlgorithm.tools.mutation import *
-from GeneticAlgorithm.tools.breed import *
+from GeneticAlgorithm.tools import breed
+from GeneticAlgorithm.tools import mutation
+from GeneticAlgorithm.tools import selection
 
 
 def evolve_best(individuals, fitness, n_parents):
@@ -12,19 +12,19 @@ def evolve_best(individuals, fitness, n_parents):
     :return: List
     """
     # -- Select parents --
-    parents = sel_best(fitness, n_parents)  # Indexes of best individuals in descending order
+    parents = selection.sel_best(fitness, n_parents)  # Indexes of best individuals in descending order
 
     # -- Produce children --
-    children = breed_uniform(individuals, parents, n_children=len(individuals), co_prob=0.5)
+    children = breed.breed_uniform(individuals, parents, n_children=len(individuals), co_prob=0.5)
 
     # -- Mutate children --
     for child in children:
-        mut_gauss(child, 0.01)
+        mutation.mut_gauss(child, 0.01)
 
     new_individuals = list(children)
 
     # -- Elitism --
-    best_id = sel_best(fitness, round(0.05 * len(fitness)))
+    best_id = selection.sel_best(fitness, round(0.05 * len(fitness)))
     for i, best in enumerate(best_id):
         new_individuals[i] = list(individuals[best])
 
@@ -41,19 +41,19 @@ def evolve_tournament(individuals, fitness, tournaments, tour_size):
     :return: List
     """
     # ------- Tournament selection --------
-    parents = sel_tournament(fitness, tournaments, tour_size, replace=False)
+    parents = selection.sel_tournament(fitness, tournaments, tour_size, replace=False)
 
     # -- Perform Crossover --
-    children = breed_uniform(individuals, parents, n_children=len(individuals), co_prob=0.5)
+    children = breed.breed_uniform(individuals, parents, n_children=len(individuals), co_prob=0.5)
 
     # ------- Mutate children -------
     for child in children:
-        mut_gauss(child, 0.01)
+        mutation.mut_gauss(child, 0.01)
 
     new_individuals = list(children)
 
     # -- Elitism --
-    best_id = sel_best(fitness, round(0.05 * len(fitness)))
+    best_id = selection.sel_best(fitness, round(0.05 * len(fitness)))
     for i, best in enumerate(best_id):
         new_individuals[i] = list(individuals[best])
 
@@ -69,19 +69,19 @@ def evolve_roulette(individuals, fitness, tournaments):
     :return: List
     """
     # -- Select parents --
-    parents = sel_roulette(fitness, tournaments)
+    parents = selection.sel_roulette(fitness, tournaments)
 
     # -- Perform Crossover --
-    children = breed_uniform(individuals, parents, n_children=len(individuals), co_prob=0.5)
+    children = breed.breed_uniform(individuals, parents, n_children=len(individuals), co_prob=0.5)
 
     # ------- Mutate children -------
     for child in children:
-        mut_gauss(child, 0.01)
+        mutation.mut_gauss(child, 0.01)
 
     new_individuals = list(children)
 
     # -- Elitism --
-    best_id = sel_best(fitness, round(0.05 * len(fitness)))
+    best_id = selection.sel_best(fitness, round(0.05 * len(fitness)))
     for i, best in enumerate(best_id):
         new_individuals[i] = list(individuals[best])
 
@@ -104,20 +104,20 @@ def evolve_breed_roulette(individuals, fitness, tournaments):
     :return: List
     """
     # -- Select parents --
-    parents = sel_random(list(range(len(fitness))), tournaments)
+    parents = selection.sel_random(list(range(len(fitness))), tournaments)
     parents_fitness = [fitness[val] for val in parents]
 
     # -- Perform Crossover --
-    children = breed_roulette(individuals, parents, parents_fitness, n_children=len(individuals), co_prob=0.5)
+    children = breed.breed_roulette(individuals, parents, parents_fitness, n_children=len(individuals), co_prob=0.5)
 
     # ------- Mutate children -------
     for child in children:
-        mut_gauss(child, 0.01)
+        mutation.mut_gauss(child, 0.01)
 
     new_individuals = list(children)
 
     # -- Elitism --
-    best_id = sel_best(fitness, round(0.05 * len(fitness)))
+    best_id = selection.sel_best(fitness, round(0.05 * len(fitness)))
     for i, best in enumerate(best_id):
         new_individuals[i] = list(individuals[best])
 
@@ -133,19 +133,19 @@ def evolve_sus(individuals, fitness, n_parents):
     :return: List
     """
     # -- Select parents --
-    parents = sel_sus(fitness, n_parents)
+    parents = selection.sel_sus(fitness, n_parents)
 
     # -- Perform crossover --
-    children = breed_uniform(individuals, parents, n_children=len(individuals), co_prob=0.5)
+    children = breed.breed_uniform(individuals, parents, n_children=len(individuals), co_prob=0.5)
 
     # ------- Mutate children -------
     for child in children:
-        mut_gauss(child, 0.01)
+        mutation.mut_gauss(child, 0.01)
 
     new_individuals = list(children)
 
     # -- Elitism --
-    best_id = sel_best(fitness, round(0.05 * len(fitness)))
+    best_id = selection.sel_best(fitness, round(0.05 * len(fitness)))
     for i, best in enumerate(best_id):
         new_individuals[i] = list(individuals[best])
 

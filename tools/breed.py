@@ -1,8 +1,9 @@
 import random
+
 import numpy as np
-from GeneticAlgorithm.tools.crossover import co_uniform
-from GeneticAlgorithm.tools.crossover import co_one_point
-from GeneticAlgorithm.tools.selection import sel_roulette
+
+from GeneticAlgorithm.tools import crossover
+from GeneticAlgorithm.tools import selection
 
 
 def breed_uniform(individuals, parents, n_children, co_prob):
@@ -19,7 +20,7 @@ def breed_uniform(individuals, parents, n_children, co_prob):
     sample_size = 2
     for i in range(n_children):
         parent1, parent2 = random.sample(parents, sample_size)
-        child1, child2 = co_uniform(individuals[parent1], individuals[parent2], co_prob)
+        child1, child2 = crossover.co_uniform(individuals[parent1], individuals[parent2], co_prob)
         children += (child1,)
     return children
 
@@ -38,9 +39,9 @@ def breed_roulette(individuals, parents, parents_fitness, n_children, co_prob):
     children = ()
     sample_size = 2
     for i in range(n_children):
-        index = sel_roulette(parents_fitness, sample_size)  # Select parent index through roulette selection
+        index = selection.sel_roulette(parents_fitness, sample_size)  # Select parent index through roulette selection
         parent1, parent2 = parents[index[0]], parents[index[1]]
-        child1, child2 = co_uniform(individuals[parent1], individuals[parent2], co_prob)
+        child1, child2 = crossover.co_uniform(individuals[parent1], individuals[parent2], co_prob)
         children += (child1,)
     return children
 
@@ -57,7 +58,7 @@ def breed_uniform_one_point(individuals, parents, n_children):
     sample_size = 2
     for i in range(n_children):
         parent1, parent2 = random.sample(parents, sample_size)
-        child1, child2 = co_one_point(individuals[parent1], individuals[parent2])
+        child1, child2 = crossover.co_one_point(individuals[parent1], individuals[parent2])
         children += (child1,)
     return children
 
@@ -74,7 +75,7 @@ def breed_unique(individuals, parents):
     children = ()
     for i, parent in enumerate(parents):
         if i < np.floor(len(parents) / 2):
-            child1, child2 = co_uniform(individuals[parents[i]], individuals[parents[-i-1]], co_prob=0.5)
+            child1, child2 = crossover.co_uniform(individuals[parents[i]], individuals[parents[-i-1]], co_prob=0.5)
             children += (child1,)
 
     return children

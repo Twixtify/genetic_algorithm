@@ -1,6 +1,8 @@
 import random
+
 import numpy as np
-from GeneticAlgorithm.tools.extra import sort_lists, is_numpy
+
+from GeneticAlgorithm.tools import extra
 
 
 def sel_best(fitness, size):
@@ -13,7 +15,7 @@ def sel_best(fitness, size):
     fitness_index = []
     for i, _ in enumerate(fitness):
         fitness_index.append(i)
-    sorted_fitness, sorted_index = sort_lists(fitness, fitness_index, descending=True)
+    sorted_fitness, sorted_index = extra.sort_lists(fitness, fitness_index, descending=True)
     return [sorted_index[k] for k in range(size)]
 
 
@@ -27,7 +29,7 @@ def sel_worst(fitness, size):
     fitness_index = []
     for i, _ in enumerate(fitness):
         fitness_index.append(i)
-    sorted_fitness, sorted_index = sort_lists(fitness, fitness_index, descending=False)
+    sorted_fitness, sorted_index = extra.sort_lists(fitness, fitness_index, descending=False)
     return [sorted_index[k] for k in range(size)]
 
 
@@ -39,7 +41,7 @@ def sel_random(individuals, size, replacement=False):
     :param replacement: Boolean
     :return: List with elements of 'individuals'
     """
-    if is_numpy(individuals):
+    if extra.is_numpy(individuals):
         return [np.random.choice(individuals, replace=replacement) for _ in range(size)]
     else:
         if replacement:
@@ -99,7 +101,7 @@ def sel_sus(fitness, size):
     :return: List of indexes of 'fitness'
     """
     # Sort fitness in descending order
-    sorted_fitness, sorted_index = sort_lists(fitness, list(range(len(fitness))), descending=True)
+    sorted_fitness, sorted_index = extra.sort_lists(fitness, list(range(len(fitness))), descending=True)
     # Total fitness
     total_fitness = sum(sorted_fitness)
     # Normalize fitness (i.e map fitness values to the interval [0, 1])

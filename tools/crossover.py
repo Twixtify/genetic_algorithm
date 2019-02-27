@@ -1,6 +1,6 @@
 import numpy as np
 
-from GeneticAlgorithm.tools.extra import is_numpy
+from GeneticAlgorithm.tools import extra
 
 
 def co_uniform(ind1, ind2, co_prob=0.5, modify_in_place=False):
@@ -47,7 +47,7 @@ def co_one_point(ind1, ind2):
     Since numpy arrays are fixed in size we have to convert them to lists first.
     This is necessary since individuals 1 and 2 might be of different lengths.
     """
-    if is_numpy(ind1) and is_numpy(ind2):
+    if extra.is_numpy(ind1) and extra.is_numpy(ind2):
         ind1, ind2 = ind1.tolist(), ind2.tolist()
         co_ind1, co_ind2 = ind1[:co_point] + ind2[co_point:], ind2[:co_point] + ind1[co_point:]
         ind1, ind2 = np.array(co_ind1), np.array(co_ind2)

@@ -2,13 +2,13 @@ import random
 
 import numpy as np
 
-from GeneticAlgorithm.tools import crossover
-from GeneticAlgorithm.tools import selection
+from tools import crossover
+from tools import selection
 
 
-def breed_uniform(individuals, parents, n_children, co_prob):
+def breed_uniform(individuals: list, parents, n_children, co_prob):
     """
-    Parents are chosen in an uniform matter to produce children for the next generation.
+    Parents are chosen in a uniform matter to produce children for the next generation.
     Note a pair of parents produce only one child (child1).
     :param individuals: List of floats
     :param parents: List of integers (index of individuals to mate)

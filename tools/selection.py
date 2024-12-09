@@ -2,8 +2,13 @@ import random
 
 import numpy as np
 
-from GeneticAlgorithm.tools import extra
+from tools import extra
 
+"""
+Selection is the process of selecting parents to generate the children of the next generation.
+The idea is that those individuals who are not selected will unfortunately succumb to the challenges of this generation,
+i.e they will not survive to the next generation.
+"""
 
 def sel_best(fitness, size):
     """
@@ -86,7 +91,7 @@ def sel_roulette(fitness, tournaments, replace=False):
     return sel_individuals
 
 
-def sel_sus(fitness, size):
+def sel_sus(fitness: list, size: int) -> list:
     """
     Perform Stochastic Universal Sampling (SUS), this method has no bias and minimal spread.
     The idea is to map evenly spaced points to fitness values which have been sorted in descending order.
@@ -105,7 +110,7 @@ def sel_sus(fitness, size):
     # Total fitness
     total_fitness = sum(sorted_fitness)
     # Normalize fitness (i.e map fitness values to the interval [0, 1])
-    sorted_fitness[:] /= total_fitness
+    sorted_fitness[:] = [fitness / total_fitness for fitness in sorted_fitness]
     # Distance between the pointers to create
     distance = 1 / size
     # Initial pointer start

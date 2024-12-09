@@ -1,14 +1,25 @@
 import numpy as np
 
-from GeneticAlgorithm.tools import extra
+from tools import extra
 
 
-def co_uniform(ind1, ind2, co_prob=0.5, modify_in_place=False):
+"""
+Crossover is the process of creating children from individuals.
+There exists many types of crossover methods. Below two of them have been implemented.
+
+Uniform crossover is the process of swapping genes between two individuals to produce two children.
+One point crossover is the process of picking a point in each individuals genome and swapping the tail after this point 
+between them.
+"""
+
+
+def co_uniform(ind1: list, ind2: list, co_prob=0.5, modify_in_place=False) -> tuple[list, list]:
     """
     Uniform crossover. Each individual keep their length.
-    Note that this method returns two individuals
-    :param ind1: Array or List of genome 1
-    :param ind2: Array or List of genome 2
+    Note that this method returns two individuals.
+    Each gene has a probability co_prob of being swapped between individual 1 and individual 2.
+    :param ind1: individual of genome 1
+    :param ind2: individual of genome 2
     :param co_prob: Double
     :param modify_in_place: Boolean
     :return: Two Lists
@@ -35,7 +46,8 @@ def co_uniform(ind1, ind2, co_prob=0.5, modify_in_place=False):
 
 def co_one_point(ind1, ind2):
     """
-    One point crossover. Return
+    One point crossover.
+    Pick a position in the chromosome for both individuals and swap their genes at that position.
     Note that if len(ind1) != len(ind2) then the length of the output arrays will be interchanged.
     :param ind1: List or numpy array
     :param ind2: List or numpy array
